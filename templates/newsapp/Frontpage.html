@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset = "utf-8">
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1.0, shrink-to-fit = no">
+        <meta http-equiv = "x-ua-compatible" content = "ie = edge">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel = "stylesheet" type="text/css" href = "{% static "newsapp/Frontpagecss.css" %}">
+        <title>Get latest news from top sources</title>
+    </head>
+    <body>
+        <nav class = "navbar  navbar-dark bg-dark navbar-expand-sm">
+            <div class = "container-fluid">
+                <div class = "navbar-brand">
+                    <a href = "{% url 'send_news' %}" >News Aggregator</a>
+                </div>
+                <button type = "button" class = "navbar-toggler" data-toggle = "collapse" data-target = "#collapsable" aria-expanded = "false">
+                    <span class = "navbar-toggler-icon"></span>
+                </button>
+                <div class = "collapse navbar-collapse" id = "collapsable">
+                {% block nav %}
+                    <ul class = "nav navbar-nav ml-auto">
+                        {% block India%}<li class = "nav-item text-center active"><a href = "{% url 'send_news' %}" class = "nav-link">India</a></li>{% endblock %}
+                        {% block sports %}<li class = "nav-item text-center"><a href = "{% url 'send_sports_news' %}" class = "nav-link">Sports</a></li>{% endblock %}
+                        {% block entertainment %}<li class = "nav-item text-center"><a href = "{% url 'send_entertainment_news' %}" class = "nav-link">Entertainment</a></li>{% endblock %}
+                        {% block politics %}<li class = "nav-item text-center"><a href = "{% url 'send_politics_news' %}" class = "nav-link">Politics</a></li>{% endblock %}
+
+                    </ul>
+                {% endblock %}
+                </div>
+            </div>
+        </nav>
+        {% block carousel %}
+        <div class="bd-example">
+          <div id="carouselCaptions" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+              <li data-target="#carouselCaptions" data-slide-to="0" class="active"></li>
+              <li data-target="#carouselCaptions" data-slide-to="1"></li>
+              <li data-target="#carouselCaptions" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <a href="#"><img src="{% static "newsapp/Red fort.jpg" %}" class="d-block w-100" alt="..."></a>
+                <div class="carousel-caption d-sm-block">
+                  <h1>India</h1>
+                 
+                </div>
+              </div>
+              <div class="carousel-item">
+
+                <a href = "{% url 'send_sports_news' %}">
+                    <img src="{% static "newsapp/Red fort.jpg" %}" class="d-block w-100" alt="..."></a>
+                <div class="carousel-caption d-sm-block">
+                  <h1>Sports</h1>
+                  
+                </div>
+              </div>
+              <div class="carousel-item">
+                <a href = "{% url 'send_politics_news' %}">
+                <img src="{% static "newsapp/Red fort.jpg" %}" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-sm-block ">
+                  <h1>Politics</h1>
+                 
+                </div>
+                </a>
+              </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselCaptions" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselCaptions" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+        </div>
+        {% endblock %}
+        <div class = "row ">
+
+        {% for title, desc, image in my_list %}
+
+            <div class = "col-md-6 d-flex align-items-stretch">
+            <div class = "card">
+            <div class = "card-img-top">
+                <img src="{{ image }}" class = "img-fluid w-100" alt="">
+                {{ value|linebreaks }}
+                {{ title }}
+            </div>
+
+
+            <div class = "card-body" style="background: burlywood">
+                {{ desc }}
+                {{ value|linebreaks }}
+            </div>
+            </div>
+
+
+        </div>
+        {% endfor %}
+
+
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </body>
+</html>
