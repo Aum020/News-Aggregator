@@ -41,27 +41,23 @@
             </ol>
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <a href="#"><img src="{% static "newsapp/Red fort.jpg" %}" class="d-block w-100" alt="..."></a>
+                <a href="#"><img src="{% static "newsapp/Red fort.jpg" %}" class="d-block" style= "width: 100%; height:700px" alt="..."></a>
                 <div class="carousel-caption d-sm-block">
                   <h1>India</h1>
-                 
                 </div>
               </div>
               <div class="carousel-item">
-
                 <a href = "{% url 'send_sports_news' %}">
-                    <img src="{% static "newsapp/Red fort.jpg" %}" class="d-block w-100" alt="..."></a>
+                    <img src="{% static "newsapp/sport.png" %}" class="d-block" style= "width: 100%; height:700px" alt="..."></a>
                 <div class="carousel-caption d-sm-block">
                   <h1>Sports</h1>
-                  
                 </div>
               </div>
               <div class="carousel-item">
                 <a href = "{% url 'send_politics_news' %}">
-                <img src="{% static "newsapp/Red fort.jpg" %}" class="d-block w-100" alt="...">
+                <img src="{% static "newsapp/sansad.jpg" %}" class="d-block" style= "width: 100%; height:700px" alt="...">
                 <div class="carousel-caption d-sm-block ">
                   <h1>Politics</h1>
-                 
                 </div>
                 </a>
               </div>
@@ -78,32 +74,35 @@
         </div>
         {% endblock %}
         <div class = "row ">
-
-        {% for title, desc, image in my_list %}
-
-            <div class = "col-md-6 d-flex align-items-stretch">
+        {% for object in object_list%}
+            <div class = "col-md-4 d-flex align-items-stretch">
             <div class = "card">
             <div class = "card-img-top">
-                <img src="{{ image }}" class = "img-fluid w-100" alt="">
+                <img src="{{ object.img }}" class = "img-fluid w-100" alt="">
                 {{ value|linebreaks }}
-                {{ title }}
+                {{ object.title }}
             </div>
-
-
             <div class = "card-body" style="background: burlywood">
-                {{ desc }}
+                {{ object.desc }}
                 {{ value|linebreaks }}
             </div>
             </div>
-
-
         </div>
         {% endfor %}
-
-
-
+        </div>
+        <nav aria-label = "Page Navigation">
+            <ul class = "pagination pagination-lg justify-content-center" style="border-radius: 0">
+                {% if object_list.has_previous%}
+                <li class = "page-item"><a class = "page-link" href = "?page={{ object_list.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                {% if object_list.has_next %}
+                <li class = "page-item"><a class = "page-link" href = "?page={{ object_list.next_page_number }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
     </body>
 </html>

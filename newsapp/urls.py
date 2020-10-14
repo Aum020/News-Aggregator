@@ -8,5 +8,4 @@ urlpatterns = [
                   path('Sports/', views.send_sports_news, name = "send_sports_news"),
                   path('Entertainment/', views.send_entertainment_news, name="send_entertainment_news"),
                   path('Politics/', views.send_politics_news, name="send_politics_news"),
-                  path('<str:category>/', views.send_category, name="send_category"),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
