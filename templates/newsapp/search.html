@@ -1,0 +1,21 @@
+{% extends 'newsapp/Frontpage.html' %}
+{% block carousel %}<div></div>{% endblock %}
+{% block content %}
+<div class = "row ">
+    {% for result_list in results%}
+        <div class = "col-md-4 d-flex align-items-stretch">
+            <div class = "card">
+            <div class = "card-img-top">
+                <img src="{{ result_list.img }}" class = "img-fluid w-100" alt="">
+                {{ value|linebreaks }}
+                {{ result_list.title }}
+            </div>
+            <div class = "card-body" style="background: burlywood">
+                {{ result_list.desc }}
+                {{ value|linebreaks }}
+            </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

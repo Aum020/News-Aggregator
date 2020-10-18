@@ -6,6 +6,7 @@
         <meta name = "viewport" content = "width = device-width, initial-scale = 1.0, shrink-to-fit = no">
         <meta http-equiv = "x-ua-compatible" content = "ie = edge">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel = "stylesheet" href = "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel = "stylesheet" type="text/css" href = "{% static "newsapp/Frontpagecss.css" %}">
         <title>Get latest news from top sources</title>
     </head>
@@ -26,11 +27,17 @@
                         {% block entertainment %}<li class = "nav-item text-center"><a href = "{% url 'send_entertainment_news' %}" class = "nav-link">Entertainment</a></li>{% endblock %}
                         {% block politics %}<li class = "nav-item text-center"><a href = "{% url 'send_politics_news' %}" class = "nav-link">Politics</a></li>{% endblock %}
 
+                        <form  class="form" method="GET" action="{% url 'search' %}">
+                            <input class = "form-control-sm" value="{{ request.GET.q }}" name = "q" placeholder="Search..." style="margin-top: 25px;">
+                            <button class = "btn btn-primary btn-sm" type="submit"><i class = "fa fa-search"></i></button>
+                        </form>
+
                     </ul>
                 {% endblock %}
                 </div>
             </div>
         </nav>
+        <div style="margin-bottom: 50px;"></div>
         {% block carousel %}
         <div class="bd-example">
           <div id="carouselCaptions" class="carousel slide" data-ride="carousel">
@@ -72,24 +79,26 @@
             </a>
           </div>
         </div>
+            <div class = "mb-4"></div>
         {% endblock %}
-        <div class = "row ">
+        {% block content %}
+        <div class = "card-columns">
         {% for object in object_list%}
-            <div class = "col-md-4 d-flex align-items-stretch">
-            <div class = "card">
-            <div class = "card-img-top">
+            <div class = "card " >
+            <div class = "card-img-top" style="display:inline-block;">
                 <img src="{{ object.img }}" class = "img-fluid w-100" alt="">
                 {{ value|linebreaks }}
-                {{ object.title }}
+                <h4>{{ object.title }}</h4>
             </div>
-            <div class = "card-body" style="background: burlywood">
-                {{ object.desc }}
+
+                <p class = "card-text" style="display:inline-block;font-size: small;">{{ object.desc }}</p>
                 {{ value|linebreaks }}
             </div>
-            </div>
-        </div>
+
         {% endfor %}
         </div>
+
+        {% endblock%}
         <nav aria-label = "Page Navigation">
             <ul class = "pagination pagination-lg justify-content-center" style="border-radius: 0">
                 {% if object_list.has_previous%}
