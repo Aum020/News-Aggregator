@@ -33,7 +33,7 @@ def send_entertainment_news(request):
 
 
 def paginate(headline, request):
-    paginator = Paginator(headline, 19)
+    paginator = Paginator(headline, 20)
     page = request.GET.get('page')
     try:
         pageno = paginator.page(page)

@@ -1,19 +1,20 @@
 {% extends 'newsapp/Frontpage.html' %}
 {% block carousel %}<div></div>{% endblock %}
 {% block content %}
-<div class = "card-columns">
-        {% for result_list in results%}
-            <div class = "card " >
+        <div class = "row">
+        {% for result in results%}
+            <div class = "card col-md-4" style="border:none;">
             <div class = "card-img-top" style="display:inline-block;">
-                <img src="{{ result_list.img }}" class = "img-fluid w-100" alt="">
+                <img src="{{ result.img }}" class = "img-fluid w-100" alt="">
                 {{ value|linebreaks }}
-                <h4>{{ result_list.title }}</h4>
+                <h4>{{ result.title }}</h4>
             </div>
 
-                <p class = "card-text" style="display:inline-block;font-size: small;">{{ result_list.desc }}</p>
+                <p class = "card-text" style="display:inline-block;font-size: large;">{{ result.desc }}</p>
                 {{ value|linebreaks }}
             </div>
 
         {% endfor %}
-        </div>
+       </div>
+
 {% endblock %}

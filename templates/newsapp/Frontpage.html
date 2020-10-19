@@ -27,7 +27,7 @@
                         {% block entertainment %}<li class = "nav-item text-center"><a href = "{% url 'send_entertainment_news' %}" class = "nav-link">Entertainment</a></li>{% endblock %}
                         {% block politics %}<li class = "nav-item text-center"><a href = "{% url 'send_politics_news' %}" class = "nav-link">Politics</a></li>{% endblock %}
 
-                        <form  class="form" method="GET" action="{% url 'search' %}">
+                        <form  class="form d-none d-sm-block" method="GET" action="{% url 'search' %}">
                             <input class = "form-control-sm" value="{{ request.GET.q }}" name = "q" placeholder="Search..." style="margin-top: 25px;">
                             <button class = "btn btn-primary btn-sm" type="submit"><i class = "fa fa-search"></i></button>
                         </form>
@@ -37,9 +37,16 @@
                 </div>
             </div>
         </nav>
-        <div style="margin-bottom: 50px;"></div>
+        <form  class="form d-block d-sm-none "  method="GET" action="{% url 'search' %}">
+            <div class="input-group" >
+            <input class = "form-control " style="width:91%;border-radius: 0;" value="{{ request.GET.q }}" name = "q" placeholder="Search...">
+            <span class="input-group-append">
+            <button class = "btn btn-primary btn-sm" style="width:max-content;border-radius: 0;" type="submit"><i class = "fa fa-search"></i></button>
+            </span>
+            </div>
+        </form>
         {% block carousel %}
-        <div class="bd-example">
+        <div class="bd-example d-none d-sm-block">
           <div id="carouselCaptions" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
               <li data-target="#carouselCaptions" data-slide-to="0" class="active"></li>
@@ -84,14 +91,14 @@
         {% block content %}
         <div class = "card-columns">
         {% for object in object_list%}
-            <div class = "card " >
+            <div class = "card" style="width:100%;border: 0px;">
             <div class = "card-img-top" style="display:inline-block;">
                 <img src="{{ object.img }}" class = "img-fluid w-100" alt="">
                 {{ value|linebreaks }}
                 <h4>{{ object.title }}</h4>
             </div>
 
-                <p class = "card-text" style="display:inline-block;font-size: small;">{{ object.desc }}</p>
+                <p class = "card-text" style="display:inline-block;font-size: large;">{{ object.desc }}</p>
                 {{ value|linebreaks }}
             </div>
 
@@ -99,8 +106,9 @@
         </div>
 
         {% endblock%}
+        <footer>
         <nav aria-label = "Page Navigation">
-            <ul class = "pagination pagination-lg justify-content-center" style="border-radius: 0">
+            <ul class = "pagination pagination-lg col justify-content-center" style="border-radius: 0">
                 {% if object_list.has_previous%}
                 <li class = "page-item"><a class = "page-link" href = "?page={{ object_list.previous_page_number }}">Previous</a></li>
                 {% endif %}
@@ -109,6 +117,7 @@
                 {% endif %}
             </ul>
         </nav>
+        </footer>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

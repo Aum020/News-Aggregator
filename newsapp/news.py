@@ -3,6 +3,7 @@ import os
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "News.settings")
 django.setup()
+import newspaper
 import requests
 from newsapp.models import Article, Sports, Entertainment, Politics
 
@@ -16,18 +17,18 @@ def render_news():
         news_headlines.title = ar["title"]
         news_headlines.img = ar["urlToImage"]
         news_headlines.desc = ar["description"]
+        news_headlines.img = downloadimg(ar["urlToImage"],ar["url"])
         exists = False
         for news in Article.objects.all():
             if news.desc == news_headlines.desc:
                 exists = True
-                print(news.desc)
                 break
         if not exists:
             news_headlines.save()
 
 
 def render_pol_news():
-    pol_url = "https://newsapi.org/v2/everything?q=Politics&pageSize=100&apiKey=4f784078aec04d8d96fe1d1e1e4281bb"
+    pol_url = "https://newsapi.org/v2/everything?q=Indian%20Politics&pageSize=100&apiKey=4f784078aec04d8d96fe1d1e1e4281bb"
     news = requests.get(pol_url).json()
     pol_article = news["articles"]
     for ar in pol_article:
@@ -35,6 +36,7 @@ def render_pol_news():
         news_headlines.title = ar["title"]
         news_headlines.img = ar["urlToImage"]
         news_headlines.desc = ar["description"]
+        news_headlines.img = downloadimg(ar["urlToImage"],ar["url"])
         exists = False
         for news in Politics.objects.all():
             if news.desc == news_headlines.desc:
@@ -53,6 +55,7 @@ def render_sports_news():
         news_headlines.title = ar["title"]
         news_headlines.img = ar["urlToImage"]
         news_headlines.desc = ar["description"]
+        news_headlines.img = downloadimg(ar["urlToImage"], ar["url"])
         exists = False
         for news in Sports.objects.all():
             if news.desc == news_headlines.desc:
@@ -71,6 +74,7 @@ def render_ent_news():
         news_headlines.title = ar["title"]
         news_headlines.img = ar["urlToImage"]
         news_headlines.desc = ar["description"]
+        news_headlines.img = downloadimg(ar["urlToImage"],ar["url"])
         exists = False
         for news in Entertainment.objects.all():
             if news.title == news_headlines.title or news.desc == news_headlines.desc:
@@ -78,6 +82,19 @@ def render_ent_news():
                 break
         if not exists:
             news_headlines.save()
+
+
+def downloadimg(image, img_url):
+    url = img_url
+    news = newspaper.Article(url)
+    news.download()
+    if image is None:
+        try:
+            news.parse()
+            return news.top_image
+        except newspaper.ArticleException:
+            return None
+
 
 
 if __name__ == "__main__":
