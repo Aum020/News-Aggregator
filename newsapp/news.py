@@ -17,10 +17,11 @@ def render_news():
         news_headlines.title = ar["title"]
         news_headlines.img = ar["urlToImage"]
         news_headlines.desc = ar["description"]
-        news_headlines.img = downloadimg(ar["urlToImage"],ar["url"])
+        if ar["urlToImage"] is None:
+            news_headlines.img = downloadimg(ar["url"])
         exists = False
         for news in Article.objects.all():
-            if news.desc == news_headlines.desc:
+            if news.desc == ar["description"]:
                 exists = True
                 break
         if not exists:
@@ -36,7 +37,8 @@ def render_pol_news():
         news_headlines.title = ar["title"]
         news_headlines.img = ar["urlToImage"]
         news_headlines.desc = ar["description"]
-        news_headlines.img = downloadimg(ar["urlToImage"],ar["url"])
+        if ar["urlToImage"] is None:
+            news_headlines.img = downloadimg(ar["url"])
         exists = False
         for news in Politics.objects.all():
             if news.desc == news_headlines.desc:
@@ -55,7 +57,8 @@ def render_sports_news():
         news_headlines.title = ar["title"]
         news_headlines.img = ar["urlToImage"]
         news_headlines.desc = ar["description"]
-        news_headlines.img = downloadimg(ar["urlToImage"], ar["url"])
+        if ar["urlToImage"] is None:
+            news_headlines.img = downloadimg(ar["url"])
         exists = False
         for news in Sports.objects.all():
             if news.desc == news_headlines.desc:
@@ -66,7 +69,7 @@ def render_sports_news():
 
 
 def render_ent_news():
-    ent_url = "https://newsapi.org/v2/everything?q=Entertainment&pageSize=100&apiKey=4f784078aec04d8d96fe1d1e1e4281bb"
+    ent_url = "https://newsapi.org/v2/everything?q=Indian%20Entertainment&pageSize=100&apiKey=4f784078aec04d8d96fe1d1e1e4281bb"
     open_ent_page = requests.get(ent_url).json()
     article = open_ent_page["articles"]
     for ar in article:
@@ -74,27 +77,26 @@ def render_ent_news():
         news_headlines.title = ar["title"]
         news_headlines.img = ar["urlToImage"]
         news_headlines.desc = ar["description"]
-        news_headlines.img = downloadimg(ar["urlToImage"],ar["url"])
+        if ar["urlToImage"] is None:
+            news_headlines.img = downloadimg( ar["url"])
         exists = False
         for news in Entertainment.objects.all():
-            if news.title == news_headlines.title or news.desc == news_headlines.desc:
+            if  news.desc == ar["description"]:
                 exists = True
                 break
         if not exists:
             news_headlines.save()
 
 
-def downloadimg(image, img_url):
+def downloadimg(img_url):
     url = img_url
     news = newspaper.Article(url)
     news.download()
-    if image is None:
-        try:
-            news.parse()
-            return news.top_image
-        except newspaper.ArticleException:
-            return None
-
+    try:
+        news.parse()
+        return news.top_image
+    except newspaper.ArticleException:
+        return None
 
 
 if __name__ == "__main__":

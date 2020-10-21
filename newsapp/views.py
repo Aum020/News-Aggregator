@@ -1,3 +1,4 @@
+from django.contrib.admin.templatetags.admin_list import pagination
 from django.shortcuts import render
 from django.db.models import Q
 from itertools import chain
@@ -45,8 +46,6 @@ def paginate(headline, request):
         'object_list': pageno,
     }
     return context
-
-
 def search(request):
     template = "newsapp/search.html"
     query = request.GET.get('q')
@@ -54,5 +53,13 @@ def search(request):
     ent = Entertainment.objects.filter(Q(title__icontains=query) | Q(desc__icontains=query))
     pol = Politics.objects.filter(Q(title__icontains=query) | Q(desc__icontains=query))
     sports = Sports.objects.filter(Q(title__icontains=query) | Q(desc__icontains=query))
-    results = chain(india, ent, pol, sports)
-    return render(request, template, context={'results': results})
+    page = list(
+        sorted(
+            chain(india, ent, pol, sports),
+            key= lambda objects:objects.title
+        )
+    )
+    print(len(page))
+    context = paginate(page, request)
+
+    return render(request, template, context)

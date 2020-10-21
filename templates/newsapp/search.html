@@ -1,20 +1,17 @@
 {% extends 'newsapp/Frontpage.html' %}
 {% block carousel %}<div></div>{% endblock %}
-{% block content %}
-        <div class = "row">
-        {% for result in results%}
-            <div class = "card col-md-4" style="border:none;">
-            <div class = "card-img-top" style="display:inline-block;">
-                <img src="{{ result.img }}" class = "img-fluid w-100" alt="">
-                {{ value|linebreaks }}
-                <h4>{{ result.title }}</h4>
-            </div>
 
-                <p class = "card-text" style="display:inline-block;font-size: large;">{{ result.desc }}</p>
-                {{ value|linebreaks }}
-            </div>
-
-        {% endfor %}
-       </div>
-
+{% block paginate %}
+    <footer>
+        <nav aria-label = "Page Navigation">
+            <ul class = "pagination pagination-lg col justify-content-center" style="border-radius: 0">
+                {% if object_list.has_previous%}
+                <li class = "page-item"><a class = "page-link" href = "?page={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Previous</a></li>
+                {% endif %}
+                {% if object_list.has_next %}
+                <li class = "page-item"><a class = "page-link" href = "?page={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        </footer>
 {% endblock %}
