@@ -4,8 +4,9 @@ from django.db import models
 
 class Mainart(models.Model):
     title = models.CharField(max_length=300)
+    name = models.CharField(max_length=100,  default="")
     img = models.URLField(null=True, blank=True)
-
+    url = models.URLField(null=True, blank=True)
     def __str__(self):
         return self.title
 

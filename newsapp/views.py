@@ -1,4 +1,4 @@
-from django.contrib.admin.templatetags.admin_list import pagination
+
 from django.shortcuts import render
 from django.db.models import Q
 from itertools import chain
@@ -59,7 +59,6 @@ def search(request):
             key= lambda objects:objects.title
         )
     )
-    print(len(page))
     context = paginate(page, request)
 
     return render(request, template, context)
