@@ -32,9 +32,10 @@ a:hover{
     body{
     font-size: 1.8vw;
 }
-    .card-text {
-        font-size: 0.5vw;
+    .card-text{
+        font-size: 1.2vw;
     }
+
     .nav-link{
         font-size: 1.3vw;
     }

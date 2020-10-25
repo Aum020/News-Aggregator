@@ -35,10 +35,11 @@ def render_pol_news():
     pol_url = "https://newsapi.org/v2/everything?q=Indian%20Politics&pageSize=100&apiKey=4f784078aec04d8d96fe1d1e1e4281bb"
     news = requests.get(pol_url).json()
     pol_article = news["articles"]
+    i = 0
     for ar in pol_article:
         news_headlines = Politics()
         news_headlines.title = ar["title"]
-
+        news_headlines.name = pol_article[i]['source']['name']
         news_headlines.url = ar["url"]
         news_headlines.img = ar["urlToImage"]
         news_headlines.desc = ar["description"]
@@ -51,16 +52,17 @@ def render_pol_news():
                 break
         if not exists:
             news_headlines.save()
-
+        i+=1
 
 def render_sports_news():
     sports_url = "https://newsapi.org/v2/everything?q=Sports&pageSize=100&apiKey=4f784078aec04d8d96fe1d1e1e4281bb"
     open_sports_page = requests.get(sports_url).json()
     sports_article = open_sports_page["articles"]
+    i = 0
     for ar in sports_article:
         news_headlines = Sports()
         news_headlines.title = ar["title"]
-
+        news_headlines.name = sports_article[i]['source']['name']
         news_headlines.url = ar["url"]
         news_headlines.img = ar["urlToImage"]
         news_headlines.desc = ar["description"]
@@ -73,16 +75,18 @@ def render_sports_news():
                 break
         if not exists:
             news_headlines.save()
+        i+=1
 
 
 def render_ent_news():
     ent_url = "https://newsapi.org/v2/everything?q=Indian%20Entertainment&pageSize=100&apiKey=4f784078aec04d8d96fe1d1e1e4281bb"
     open_ent_page = requests.get(ent_url).json()
     article = open_ent_page["articles"]
+    i = 0
     for ar in article:
         news_headlines = Entertainment()
         news_headlines.title = ar["title"]
-
+        news_headlines.name = article[i]['source']['name']
         news_headlines.url = ar["url"]
         news_headlines.img = ar["urlToImage"]
         news_headlines.desc = ar["description"]
@@ -95,6 +99,7 @@ def render_ent_news():
                 break
         if not exists:
             news_headlines.save()
+        i+=1
 
 
 def downloadimg(img_url):
@@ -107,7 +112,7 @@ def downloadimg(img_url):
     except newspaper.ArticleException:
         return None
 
-def run():
+if __name__ == "__main__":
     render_news()
     render_pol_news()
     render_ent_news()

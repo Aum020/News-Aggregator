@@ -117,17 +117,17 @@
 
         <div class = "card-columns">
         {% for object in object_list%}
-            <div class = "card " style="border-radius: 0;border: 0;">
+            <div class = "card" style="border-radius: 0;border: 0;">
             <div class = "card-img-top" style="display:inline-block;">
                 <img src="{{ object.img }}" class = "img-fluid w-100" alt="">
 
                 <a href="{{object.url}}" target="_blank" style="color: inherit"><h4>{{ object.title }}</h4></a>
             </div>
 
-                <p class = "card-text col-md-12" >{{ object.desc }}</p>
+                <p class = "card-text col-md-12" style="display: inline-block">{{ object.desc }}</p>
 
 
-            <h3><span class="badge  badge-primary" >{{ object.name }}</span></h3>
+            <h3><span class="badge  badge-primary" style="display: inline-block">{{ object.name }}</span></h3>
             </div>
             {% endfor %}
             </div>
